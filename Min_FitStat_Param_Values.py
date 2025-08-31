@@ -25,10 +25,10 @@ except Exception:
 #TEST IF SPIN FREE
 try:
     a_array = data["a__37"]
-    a = 1
+    spin =1
     print("SPIN FREE")
 except Exception:
-    a = 0
+    spin =0
     
 #CHECK FOR GABS
 try:
@@ -108,7 +108,7 @@ if (N_III == 1):
     data1 = data1[:3] + [OIII_array] + data1[3:5] + [NeIII_array] + data1[5:]
     param_index = param_index[:3] + [12] + param_index[3:5] + [15] + param_index[5:]
 
-if (a == 1):
+if (spin == 1):
     loc = np.where(np.array(param_index) == 34)[0][0] + 1
     data1 = data1[:loc] + [a_array] + data1[loc:] 
     param_index = param_index[:loc] + [37] + param_index[loc:] 
@@ -119,7 +119,11 @@ if (gabs == 1):
 
 if (smedge == 1):
     data1 = data1 + [Smedge_E_array, Smedge_Tau_array, Smedge_w_array]
-    param_index = param_index + [73,74,76]
+    param_index = param_index + [73, 74, 76]
+    
+if (NuSTAR_data == 1):
+    data1 = data1 + [factor_1_array, factor_2_array]
+    param_index = param_index + [61, 121]
 
 #PRINT VALUE OF MIN FIT STAT. VALUE
 min_FS = np.min(FS_array)
