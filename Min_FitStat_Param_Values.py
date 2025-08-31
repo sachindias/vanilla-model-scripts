@@ -25,7 +25,7 @@ except Exception:
 #TEST IF SPIN FREE
 try:
     a_array = data["a__37"]
-    spin =1
+    spin = 1
     print("SPIN FREE")
 except Exception:
     spin =0
