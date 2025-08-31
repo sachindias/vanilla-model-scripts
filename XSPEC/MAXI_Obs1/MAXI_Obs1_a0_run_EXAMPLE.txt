@@ -1,0 +1,69 @@
+#rev3531 = Obs1
+
+#===========================
+#load up heasoft
+#===========================
+. /home/s/sdd9/heasoft-6.30.1/x86_64-pc-linux-gnu-libc2.34/headas-init.sh
+
+#===========================
+#basic setup
+#===========================
+cd /scratch/spectre/s/sdd9/post_processing/MAXI_J1820p070/EPIC_corrections/rev3531/processed/pn/
+
+xspec
+
+data rev3531_cor_pileup_PN_spectrum_grp.fits
+
+lmod relxill /home/s/sdd9/relxill_v2_1/
+
+ignore **-0.8
+ignore 10.0-**
+ignore 1.75-2.35
+
+statistic chi
+setplot energy
+
+energies extend low 0.01 50 log
+
+#===========================
+#load in the model & log
+#===========================
+@rev3531_1_9_22_a0.xcm
+date +"%d/%m/%Y" >> rev3531_a0_run_log.txt
+echo " "  >> rev3531_a0_run_log.txt
+date >> rev3531_a0_run_log.txt
+echo "model: rev3531_1_9_22_a0.xcm" >> rev3531_a0_run_log.txt
+
+#===========================
+#load in and run the chain
+#===========================
+chain clear
+chain type gw
+chain proposal gaussian deltas 0.001
+chain load rev3531_1_9_22_a0_2M.fits
+
+chain length 1999800 #as 200 starting points have already been generated
+chain walkers 200
+parallel walkers 25
+
+
+echo "run: rev3531_1_9_22_a0_2M.fits" >> rev3531_a0_run_log.txt
+echo "chain length 2000000" >> rev3531_a0_run_log.txt
+echo "chain walkers 200" >> rev3531_a0_run_log.txt
+echo "proposal gaussian deltas 0.001" >> rev3531_a0_run_log.txt
+echo "parallel walkers 25" >> rev3531_a0_run_log.txt
+echo " "  >> rev3531_a0_run_log.txt
+date >> rev3531_a0_run_log.txt
+echo " "  >> rev3531_a0_run_log.txt
+
+chain run >rev3531_1_9_22_a0_2M.fits
+
+echo " "  >> rev3531_a0_run_log.txt
+date >> rev3531_a0_run_log.txt
+echo "=============================="  >> rev3531_a0_run_log.txt
+echo "=============================="  >> rev3531_a0_run_log.txt
+echo " "  >> rev3531_a0_run_log.txt
+
+exit
+date
+
