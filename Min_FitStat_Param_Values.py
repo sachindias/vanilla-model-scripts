@@ -28,7 +28,7 @@ try:
     spin = 1
     print("SPIN FREE")
 except Exception:
-    spin =0
+    spin = 0
     
 #CHECK FOR GABS
 try:
