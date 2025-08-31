@@ -267,7 +267,7 @@ for n in range(len(FS)):
                 norm_a.append(norm_array[n])
                 
                 if (gabs == 1):
-                    LineE_a.appendLineE_array[n]
+                    LineE_a.append(LineE_array[n])
                     Strength_1_a.append(Strength_array1[n])
                     Strength_2_a.append(Strength_array2[n])
                     Strength_3_a.append(Strength_array3[n])
