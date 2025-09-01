@@ -46,8 +46,6 @@ chain run ICP_rev3531_1_9_22_a0.fits
 #===========================
 #run the chain to generate
 #1 point per walker
-#this can be copied and
-#overwritten for each batch
 #===========================
 chain clear
 chain type gw
@@ -55,6 +53,19 @@ chain proposal gaussian deltas 0.001
 chain length 200
 chain walkers 200
 chain run rev3531_1_9_22_a0_2M.fits
+
+#===========================
+#run the chain to generate
+#1 point per walker
+#this version can be copied (and then
+#overwritten) for each batch
+#===========================
+chain clear
+chain type gw
+chain proposal gaussian deltas 0.001
+chain length 200
+chain walkers 200
+chain run rev3531_1_9_22_a0_rewritable_200.fits
 
 exit
 date
