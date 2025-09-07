@@ -1,4 +1,4 @@
-#rev3531 = Obs1
+#This example is for MAXI J1820+070, rev3531 (Obs1)
 
 #===========================
 #load up heasoft

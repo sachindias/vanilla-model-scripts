@@ -1,9 +1,5 @@
-import numpy as np
 from astropy.io import fits
-import matplotlib.pyplot as plt
 import datetime
-import corner
-from matplotlib import rcParams
 import shutil
 
 start = datetime.datetime.now()
