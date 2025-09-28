@@ -1,0 +1,75 @@
+#rev3533 = Obs2
+
+#===========================
+#load up heasoft
+#===========================
+. /home/s/sdd9/heasoft-6.30.1/x86_64-pc-linux-gnu-libc2.34/headas-init.sh
+
+#===========================
+#basic setup
+#===========================
+cd /scratch/spectre/s/sdd9/MAXI_J1820p070/EPIC_corrections/rev3533/processed/pn_and_NuSTAR/
+
+xspec
+
+data 1:1 rev3533_cor_pileup_PN_spectrum_grp.fits 2:2 March_A_OM_Nustar_grp_spectrum.pha 3:3 March_B_OM_Nustar_grp_spectrum.pha
+
+lmod relxill /home/s/sdd9/relxill_v2_1/
+
+ignore 1:1 **-0.8
+ignore 1:1 10.0-**
+ignore 1:1 1.75-2.35
+
+ignore 2:2 **-5.0
+ignore 2:2 70.0-**
+
+ignore 3:3 **-3.0
+ignore 3:3 70.0-**
+
+statistic chi
+setplot energy
+
+energies extend low 0.01 50 log
+
+#===========================
+#load in the model & log
+#===========================
+@rev3533_1_9_22_afree.xcm
+date +"%d/%m/%Y" >> rev3533_afree_run_log.txt
+echo " "  >> rev3533_afree_run_log.txt
+date >> rev3533_afree_run_log.txt
+echo "model: rev3533_1_9_22_afree.xcm" >> rev3533_afree_run_log.txt
+
+#===========================
+#load in and run the chain
+#===========================
+chain clear
+chain type gw
+chain proposal gaussian deltas 0.001
+chain load rev3533_1_9_22_afree_2M.fits
+
+chain length 1999800 #as 200 starting points have already been generated
+chain walkers 200
+parallel walkers 25
+
+
+echo "run: rev3533_1_9_22_afree_2M.fits" >> rev3533_afree_run_log.txt
+echo "chain length 2000000" >> rev3533_afree_run_log.txt
+echo "chain walkers 200" >> rev3533_afree_run_log.txt
+echo "proposal gaussian deltas 0.001" >> rev3533_afree_run_log.txt
+echo "parallel walkers 25" >> rev3533_afree_run_log.txt
+echo " "  >> rev3533_afree_run_log.txt
+date >> rev3533_afree_run_log.txt
+echo " "  >> rev3533_afree_run_log.txt
+
+chain run >rev3533_1_9_22_afree_2M.fits
+
+echo " "  >> rev3533_afree_run_log.txt
+date >> rev3533_afree_run_log.txt
+echo "=============================="  >> rev3533_afree_run_log.txt
+echo "=============================="  >> rev3533_afree_run_log.txt
+echo " "  >> rev3533_afree_run_log.txt
+
+exit
+date
+
