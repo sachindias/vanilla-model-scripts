@@ -24,7 +24,7 @@ MAXI_GRO = "MAXI"
 
 #MAXI or GRO
 if (MAXI_GRO == "MAXI"):
-    R_norm = 1.67457e-3
+    R_norm = 1.67457e-3 #SET THIS NUMBER IF NEEDED!!!!!!
     R_norm_max = 100 * R_norm
     R_norm_min = 1e-6 * R_norm_max
 elif (MAXI_GRO == "GRO"):
