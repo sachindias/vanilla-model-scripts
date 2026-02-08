@@ -342,8 +342,8 @@ def plotter(no_batches_to_plot, hdu_list, base_filename, start_timer, no_walkers
 print("--------------------------------------------") 
 
 #SET MAIN PARAMETERS
-base_filename = "rev0970_27_9_23_afree_2M"
-save_filename = 'GRO6_final_ten'
+base_filename = "rev3533_1_9_22_afree_2M"
+save_filename = 'Obs2_afree_final_ten'
 
 no_walkers = 200
 iterations_per_batch = 10000
@@ -353,10 +353,11 @@ no_individual_walkers_to_plot = 4
 plot_in_console = True
 
 #THIS WOULD HAVE TO BE MANUALLY SET PER CHAIN TO CAPTURE ALL THE FILENAMES
-#THE BELOW EXAMPLE IS FOR GRO6
+#THE BELOW EXAMPLE IS FOR MAXI J1820+070, Obs2, afree
 hdu_list = [
-        "_P3_ext42_P2", 
-        "_P3_ext42_P2_ext",
+        ""    
+        "_P2", 
+        "_P2_ext",
         ]
 
 ext_condition = 0
@@ -365,9 +366,9 @@ file_counter = 1
 while(ext_condition < 1):
     try:
         file_counter = file_counter + 1
-        if (os.path.getsize("%s_P3_ext42_P2_ext%s.fits" %(base_filename, file_counter)) > 0):
-            hdu_list.append("_P3_ext42_P2_ext%s" %file_counter)
-            print("%s_P3_ext42_P2_ext%s.fits" %(base_filename, file_counter))
+        if (os.path.getsize("%s_P2_ext%s.fits" %(base_filename, file_counter)) > 0):
+            hdu_list.append("_P2_ext%s" %file_counter)
+            print("%s_P2_ext%s.fits" %(base_filename, file_counter))
     except Exception:
         ext_condition = 2 
    
