@@ -156,6 +156,7 @@ def extract_trace_plots_data(hdu_suffixes, base_filename, params, start_timer):
     
     return params_array_walker
 
+#PLOT NORMAL TRACE PLOTS
 def plot_trace_plots(params_array_walker, params, start_timer, no_walkers = 200, 
                      thin_factor = False, iterations_per_batch = 10000,
                      save_filename = False, plot_in_console = False,
@@ -219,6 +220,7 @@ def plot_trace_plots(params_array_walker, params, start_timer, no_walkers = 200,
     print("\nTRACE PLOTS CREATED, TIME:", datetime.datetime.now() - start_timer)  
     print("--------------------------------------------\n") 
 
+#PLOT INDIVIDUAL WALKER CHAINS TO SEE HOW THEY MOVE AS OPPOSED TO THE BULK
 def plot_individual_walkers(param_counter, iterations, params_array_walker, no_individual_walkers_to_plot, no_walkers = 200):
     
     colours = [
@@ -247,6 +249,7 @@ def plot_individual_walkers(param_counter, iterations, params_array_walker, no_i
     for n in range(no_individual_walkers_to_plot):
         plt.plot(iterations, params_array_walker[param_counter][10*(n)::no_walkers], color = colours[n], label = "walker %s" %(10*(n)) , alpha = 1)
 
+#PLOT MEAN & MEDIAN TRACE PLOTS
 def plot_mean_median_trace_plots(base_filename, hdu_suffixes, params, start_timer, save_filename = False, plot_in_console = False):
     
     #SET UP FIGURE SIZES AND THE NUMBER OF PLOTS NEEDED
@@ -310,6 +313,7 @@ def plot_mean_median_trace_plots(base_filename, hdu_suffixes, params, start_time
     print("\nMEAN & STANDARD DEVIATION TRACE PLOTS CREATED, TIME:", datetime.datetime.now() - start_timer)  
     print("--------------------------------------------\n") 
 
+#BRINGS TOGETHER OTHER FUNCTIONS TO PLOT TRACE PLOTS
 def plotter(no_batches_to_plot, hdu_list, base_filename, start_timer, no_walkers, 
             thin_factor, iterations_per_batch, save_filename, plot_in_console, 
             no_individual_walkers_to_plot, plot_trace = False, 
@@ -336,7 +340,6 @@ def plotter(no_batches_to_plot, hdu_list, base_filename, start_timer, no_walkers
 
 
 #-----------------------------------------
-
 #MAIN SCRIPT
 
 print("--------------------------------------------") 
@@ -356,8 +359,7 @@ plot_in_console = True
 #THE BELOW EXAMPLE IS FOR GRO1
 hdu_list = [
         ""    
-        "_P2", 
-        "_P2_ext",
+        "_ext",
         ]
 
 ext_condition = 0
@@ -366,9 +368,9 @@ file_counter = 1
 while(ext_condition < 1):
     try:
         file_counter = file_counter + 1
-        if (os.path.getsize("%s_P2_ext%s.fits" %(base_filename, file_counter)) > 0):
-            hdu_list.append("_P2_ext%s" %file_counter)
-            print("%s_P2_ext%s.fits" %(base_filename, file_counter))
+        if (os.path.getsize("%s_ext%s.fits" %(base_filename, file_counter)) > 0):
+            hdu_list.append("_ext%s" %file_counter)
+            print("%s_ext%s.fits" %(base_filename, file_counter))
     except Exception:
         ext_condition = 2 
    
@@ -381,11 +383,6 @@ plotter(no_batches_to_plot, hdu_list, base_filename, start_timer, no_walkers,
             no_individual_walkers_to_plot, 
             plot_trace = True, 
             plot_mean_median_trace = True)
-
-
-####################################
-### END ############################
-####################################
 
 #WRAPPING UP
 print("TOTAL TIME: %s" %(datetime.datetime.now() - start_timer))
