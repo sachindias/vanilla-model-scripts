@@ -342,18 +342,18 @@ def plotter(no_batches_to_plot, hdu_list, base_filename, start_timer, no_walkers
 print("--------------------------------------------") 
 
 #SET MAIN PARAMETERS
-base_filename = "rev3533_1_9_22_afree_2M"
-save_filename = 'Obs2_afree_final_ten'
+base_filename = "rev0956_27_9_23_afree_2M"
+save_filename = 'GRO1_afree_final_ten'
 
 no_walkers = 200
 iterations_per_batch = 10000
-thin_factor = 1000
+thin_factor = 20
 no_batches_to_plot = 10 #CHANGE TO 'All' TO PLOT EVERYTHING (MIGHT BE VERY SLOW OR CRASH)
 no_individual_walkers_to_plot = 4
 plot_in_console = True
 
 #THIS WOULD HAVE TO BE MANUALLY SET PER CHAIN TO CAPTURE ALL THE FILENAMES
-#THE BELOW EXAMPLE IS FOR MAXI J1820+070, Obs2, afree
+#THE BELOW EXAMPLE IS FOR GRO1
 hdu_list = [
         ""    
         "_P2", 
