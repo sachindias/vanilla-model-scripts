@@ -383,6 +383,7 @@ def main_function(MAXI_or_GRO, hdu_list, base_filename, save_filename, start_tim
 
 #-----------------------------------------
 #MAIN SCRIPT 1
+#THE BELOW EXAMPLE IS FOR GRO J1655-40, GRO1
 
 print("--------------------------------------------") 
 
@@ -399,7 +400,6 @@ iterations_per_batch = 10000
 plot_in_console = True
 
 #THIS WOULD HAVE TO BE MANUALLY SET PER CHAIN TO CAPTURE ALL THE FILENAMES
-#THE BELOW EXAMPLE IS FOR GRO1
 hdu_list = [   
         "",
         "_ext",
@@ -427,6 +427,7 @@ print("TOTAL TIME: %s" %(datetime.datetime.now() - start_timer))
 
 #-----------------------------------------
 #MAIN SCRIPT 2
+#THE BELOW EXAMPLE IS FOR MAXI J1820+070, Obs 2, a = 0.998
 
 print("--------------------------------------------") 
 
@@ -442,7 +443,6 @@ no_walkers = 200
 length_each_run = 10000
 
 #THIS WOULD HAVE TO BE MANUALLY SET PER CHAIN TO CAPTURE ALL THE FILENAMES
-#THE BELOW EXAMPLE IS FOR MAXI J1820+070, Obs 2, a = 0.998
 hdu_list = []
 
 #THE BATCHING IS QUITE COMPLICATED AS SOME BATCHES CONTAIN THE LAST BATCH TOO
