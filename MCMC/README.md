@@ -1,6 +1,9 @@
-# FITS File Structure
+# Notes On Markov-chain Monte Carlo
 
-----
+---
+
+## FITS File Structure
+
 ### Explaining the names
 
 For those who are able to access the data, it consists of several ~ 400MB files. Due to the complexities during warm-up and having to guide the walkers (to prevent them getting stuck in local minima) files have complicated names. These are detailed here for ease of understanding.
