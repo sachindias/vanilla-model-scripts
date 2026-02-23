@@ -52,174 +52,174 @@ File names are according to the following format:
 
 ###### afree
 
-rev3531_1_9_22_afree_10K.fits
-rev3531_1_9_22_afree_2M.fits
-rev3531_1_9_22_afree_2M_P2.fits
-rev3531_1_9_22_afree_2M_P2_ext.fits
-rev3531_1_9_22_afree_2M_P2_ext2.fits
-↓
-rev3531_1_9_22_afree_2M_P2_ext36.fits
+rev3531_1_9_22_afree_10K.fits<br>
+rev3531_1_9_22_afree_2M.fits<br>
+rev3531_1_9_22_afree_2M_P2.fits<br>
+rev3531_1_9_22_afree_2M_P2_ext.fits<br>
+rev3531_1_9_22_afree_2M_P2_ext2.fits<br>
+↓<br>
+rev3531_1_9_22_afree_2M_P2_ext36.fits<br>
 
 ###### a0
 
-rev3531_1_9_22_a0_10K.fits
-rev3531_1_9_22_a0_2M.fits
-rev3531_1_9_22_a0_2M_P2.fits
-rev3531_1_9_22_a0_2M_P2_ext.fits
-rev3531_1_9_22_a0_2M_P2_ext2.fits
-↓
-rev3531_1_9_22_a0_2M_P2_ext36.fits
+rev3531_1_9_22_a0_10K.fits<br>
+rev3531_1_9_22_a0_2M.fits<br>
+rev3531_1_9_22_a0_2M_P2.fits<br>
+rev3531_1_9_22_a0_2M_P2_ext.fits<br>
+rev3531_1_9_22_a0_2M_P2_ext2.fits<br>
+↓<br>
+rev3531_1_9_22_a0_2M_P2_ext36.fits<br>
 
 ###### amax
 
-rev3531_1_9_22_amax_10K.fits
-rev3531_1_9_22_amax_2M.fits
-rev3531_1_9_22_amax_2M_P2.fits
-rev3531_1_9_22_amax_2M_P2_ext.fits
-rev3531_1_9_22_amax_2M_P2_ext2.fits
-↓
-rev3531_1_9_22_amax_2M_P2_ext38.fits
+rev3531_1_9_22_amax_10K.fits<br>
+rev3531_1_9_22_amax_2M.fits<br>
+rev3531_1_9_22_amax_2M_P2.fits<br>
+rev3531_1_9_22_amax_2M_P2_ext.fits<br>
+rev3531_1_9_22_amax_2M_P2_ext2.fits<br>
+↓<br>
+rev3531_1_9_22_amax_2M_P2_ext38.fits<br>
 
 
 #### Obs2:
 
 ###### afree
 
-rev3533_1_9_22_afree_10K.fits
-rev3533_1_9_22_afree_2M.fits
-rev3533_1_9_22_afree_2M_P2.fits
-rev3533_1_9_22_afree_2M_P2_ext.fits
-rev3533_1_9_22_afree_2M_P2_ext2.fits
-↓
-rev3533_1_9_22_afree_2M_P2_ext31.fits
+rev3533_1_9_22_afree_10K.fits<br>
+rev3533_1_9_22_afree_2M.fits<br>
+rev3533_1_9_22_afree_2M_P2.fits<br>
+rev3533_1_9_22_afree_2M_P2_ext.fits<br>
+rev3533_1_9_22_afree_2M_P2_ext2.fits<br>
+↓<br>
+rev3533_1_9_22_afree_2M_P2_ext31.fits<br>
 
 ###### a0
 
-rev3533_1_9_22_a0_10K.fits
-rev3533_1_9_22_a0_2M.fits
-rev3533_1_9_22_a0_2M_P2.fits
-rev3533_1_9_22_a0_2M_P2_ext.fits
-rev3533_1_9_22_a0_2M_P2_ext2.fits
-↓
-rev3533_1_9_22_a0_2M_P2_ext24.fits
+rev3533_1_9_22_a0_10K.fits<br>
+rev3533_1_9_22_a0_2M.fits<br>
+rev3533_1_9_22_a0_2M_P2.fits<br>
+rev3533_1_9_22_a0_2M_P2_ext.fits<br>
+rev3533_1_9_22_a0_2M_P2_ext2.fits<br>
+↓<br>
+rev3533_1_9_22_a0_2M_P2_ext24.fits<br>
 
 ###### amax
 
-rev3533_1_9_22_amax_10K.fits
-rev3533_1_9_22_amax_2M.fits
-rev3533_1_9_22_amax_2M_P2.fits
-rev3533_1_9_22_amax_2M_P2_ext.fits
-rev3533_1_9_22_amax_2M_P2_ext2.fits
-↓
-rev3533_1_9_22_amax_2M_P2_ext23.fits
+rev3533_1_9_22_amax_10K.fits<br>
+rev3533_1_9_22_amax_2M.fits<br>
+rev3533_1_9_22_amax_2M_P2.fits<br>
+rev3533_1_9_22_amax_2M_P2_ext.fits<br>
+rev3533_1_9_22_amax_2M_P2_ext2.fits<br>
+↓<br>
+rev3533_1_9_22_amax_2M_P2_ext23.fits<br>
 
 #### Obs3:
 
 ###### afree
 
-rev3623_1_9_22_afree_10K.fits
-rev3623_1_9_22_afree_2M.fits
-rev3623_1_9_22_afree_2M_ext.fits
-rev3623_1_9_22_afree_2M_ext2.fits
-↓
-rev3623_1_9_22_afree_2M_ext23.fits
+rev3623_1_9_22_afree_10K.fits<br>
+rev3623_1_9_22_afree_2M.fits<br>
+rev3623_1_9_22_afree_2M_ext.fits<br>
+rev3623_1_9_22_afree_2M_ext2.fits<br>
+↓<br>
+rev3623_1_9_22_afree_2M_ext23.fits<br>
 
 ###### a0
 
-rev3623_1_9_22_a0_10K.fits
-rev3623_1_9_22_a0_2M.fits
-rev3623_1_9_22_a0_2M_P2.fits
-rev3623_1_9_22_a0_2M_P3.fits
-rev3623_1_9_22_a0_2M_P3_ext.fits
-rev3623_1_9_22_a0_2M_P3_ext2.fits
-↓
-rev3623_1_9_22_a0_2M_P3_ext25.fits
+rev3623_1_9_22_a0_10K.fits<br>
+rev3623_1_9_22_a0_2M.fits<br>
+rev3623_1_9_22_a0_2M_P2.fits<br>
+rev3623_1_9_22_a0_2M_P3.fits<br>
+rev3623_1_9_22_a0_2M_P3_ext.fits<br>
+rev3623_1_9_22_a0_2M_P3_ext2.fits<br>
+↓<br>
+rev3623_1_9_22_a0_2M_P3_ext25.fits<br>
 
 ###### amax
 
-rev3623_1_9_22_amax_10K.fits
-rev3623_1_9_22_amax_2M.fits
-rev3623_1_9_22_amax_2M_P2.fits
-rev3623_1_9_22_amax_2M_P2_ext.fits
-rev3623_1_9_22_amax_2M_P2_ext2.fits
-↓
-rev3623_1_9_22_amax_2M_P2_ext25.fits
+rev3623_1_9_22_amax_10K.fits<br>
+rev3623_1_9_22_amax_2M.fits<br>
+rev3623_1_9_22_amax_2M_P2.fits<br>
+rev3623_1_9_22_amax_2M_P2_ext.fits<br>
+rev3623_1_9_22_amax_2M_P2_ext2.fits<br>
+↓<br>
+rev3623_1_9_22_amax_2M_P2_ext25.fits<br>
 
 #### GRO1:
 
-rev0956_27_9_23_afree_10K.fits
-rev0956_27_9_23_afree_2M.fits
-rev0956_27_9_23_afree_2M_ext.fits
-rev0956_27_9_23_afree_2M_ext2.fits
-↓
-rev0956_27_9_23_afree_2M_ext162.fits
+rev0956_27_9_23_afree_10K.fits<br>
+rev0956_27_9_23_afree_2M.fits<br>
+rev0956_27_9_23_afree_2M_ext.fits<br>
+rev0956_27_9_23_afree_2M_ext2.fits<br>
+↓<br>
+rev0956_27_9_23_afree_2M_ext162.fits<br>
 
 #### GRO2:
 
-rev0964a_15_9_23_afree_10K.fits
-rev0964a_15_9_23_afree_2M.fits
-rev0964a_15_9_23_afree_2M_P2.fits
-rev0964a_15_9_23_afree_2M_P2_ext.fits
-rev0964a_15_9_23_afree_2M_P2_ext2.fits
-↓
-rev0964a_15_9_23_afree_2M_P2_ext32.fits
-rev0964a_15_9_23_afree_2M_P2_ext32_P2.fits
-rev0964a_15_9_23_afree_2M_P2_ext32_P2_ext.fits
-rev0964a_15_9_23_afree_2M_P2_ext32_P2_ext2.fits
-↓
-rev0964a_15_9_23_afree_2M_P2_ext32_P2_ext119.fits
+rev0964a_15_9_23_afree_10K.fits<br>
+rev0964a_15_9_23_afree_2M.fits<br>
+rev0964a_15_9_23_afree_2M_P2.fits<br>
+rev0964a_15_9_23_afree_2M_P2_ext.fits<br>
+rev0964a_15_9_23_afree_2M_P2_ext2.fits<br>
+↓<br>
+rev0964a_15_9_23_afree_2M_P2_ext32.fits<br>
+rev0964a_15_9_23_afree_2M_P2_ext32_P2.fits<br>
+rev0964a_15_9_23_afree_2M_P2_ext32_P2_ext.fits<br>
+rev0964a_15_9_23_afree_2M_P2_ext32_P2_ext2.fits<br>
+↓<br>
+rev0964a_15_9_23_afree_2M_P2_ext32_P2_ext119.fits<br>
 
 #### GRO3:
 
-rev0964b_27_9_23_afree_10K.fits
-rev0964b_27_9_23_afree_2M.fits
-rev0964b_27_9_23_afree_2M_P2.fits
-rev0964b_27_9_23_afree_2M_P2_ext.fits
-rev0964b_27_9_23_afree_2M_P3.fits
-rev0964b_27_9_23_afree_2M_P3_ext.fits
-rev0964b_27_9_23_afree_2M_P3_ext2.fits
-↓
-rev0964b_27_9_23_afree_2M_P3_ext162.fits
+rev0964b_27_9_23_afree_10K.fits<br>
+rev0964b_27_9_23_afree_2M.fits<br>
+rev0964b_27_9_23_afree_2M_P2.fits<br>
+rev0964b_27_9_23_afree_2M_P2_ext.fits<br>
+rev0964b_27_9_23_afree_2M_P3.fits<br>
+rev0964b_27_9_23_afree_2M_P3_ext.fits<br>
+rev0964b_27_9_23_afree_2M_P3_ext2.fits<br>
+↓<br>
+rev0964b_27_9_23_afree_2M_P3_ext162.fits<br>
 
 #### GRO4:
 
-rev0965_27_9_23_afree_10K.fits
-rev0965_27_9_23_afree_2M.fits
-rev0965_27_9_23_afree_2M_ext.fits
-rev0965_27_9_23_afree_2M_ext2.fits
-↓
-rev0965_27_9_23_afree_2M_ext19.fits
-rev0965_27_9_23_afree_2M_ext19_P2.fits
-rev0965_27_9_23_afree_2M_ext19_P2_ext.fits
-rev0965_27_9_23_afree_2M_ext19_P2_ext2.fits
-↓
-rev0965_27_9_23_afree_2M_ext19_P2_ext136.fits
+rev0965_27_9_23_afree_10K.fits<br>
+rev0965_27_9_23_afree_2M.fits<br>
+rev0965_27_9_23_afree_2M_ext.fits<br>
+rev0965_27_9_23_afree_2M_ext2.fits<br>
+↓<br>
+rev0965_27_9_23_afree_2M_ext19.fits<br>
+rev0965_27_9_23_afree_2M_ext19_P2.fits<br>
+rev0965_27_9_23_afree_2M_ext19_P2_ext.fits<br>
+rev0965_27_9_23_afree_2M_ext19_P2_ext2.fits<br>
+↓<br>
+rev0965_27_9_23_afree_2M_ext19_P2_ext136.fits<br>
 
 #### GRO5:
 
-rev0966_27_9_23_afree_10K.fits
-rev0966_27_9_23_afree_2M.fits
-rev0966_27_9_23_afree_2M_P2.fits
-rev0966_27_9_23_afree_2M_P2_ext.fits
-rev0966_27_9_23_afree_2M_P3.fits
-rev0966_27_9_23_afree_2M_P3_ext.fits
-rev0966_27_9_23_afree_2M_P3_ext2.fits
-↓
-rev0966_27_9_23_afree_2M_P3_ext161.fits
+rev0966_27_9_23_afree_10K.fits<br>
+rev0966_27_9_23_afree_2M.fits<br>
+rev0966_27_9_23_afree_2M_P2.fits<br>
+rev0966_27_9_23_afree_2M_P2_ext.fits<br>
+rev0966_27_9_23_afree_2M_P3.fits<br>
+rev0966_27_9_23_afree_2M_P3_ext.fits<br>
+rev0966_27_9_23_afree_2M_P3_ext2.fits<br>
+↓<br>
+rev0966_27_9_23_afree_2M_P3_ext161.fits<br>
 
 #### GRO6:
 
-rev0970_27_9_23_afree_10K.fits
-rev0970_27_9_23_afree_2M.fits
-rev0970_27_9_23_afree_2M_P2.fits
-rev0970_27_9_23_afree_2M_P2_ext.fits
-rev0970_27_9_23_afree_2M_P3.fits
-rev0970_27_9_23_afree_2M_P3_ext.fits
-rev0970_27_9_23_afree_2M_P3_ext2.fits
-↓
-rev0970_27_9_23_afree_2M_P3_ext42.fits
-rev0970_27_9_23_afree_2M_P3_ext42_P2.fits
-rev0970_27_9_23_afree_2M_P3_ext42_P2_ext.fits
-rev0970_27_9_23_afree_2M_P3_ext42_P2_ext2.fits
-↓
-rev0970_27_9_23_afree_2M_P3_ext42_P2_ext103.fits
+rev0970_27_9_23_afree_10K.fits<br>
+rev0970_27_9_23_afree_2M.fits<br>
+rev0970_27_9_23_afree_2M_P2.fits<br>
+rev0970_27_9_23_afree_2M_P2_ext.fits<br>
+rev0970_27_9_23_afree_2M_P3.fits<br>
+rev0970_27_9_23_afree_2M_P3_ext.fits<br>
+rev0970_27_9_23_afree_2M_P3_ext2.fits<br>
+↓<br>
+rev0970_27_9_23_afree_2M_P3_ext42.fits<br>
+rev0970_27_9_23_afree_2M_P3_ext42_P2.fits<br>
+rev0970_27_9_23_afree_2M_P3_ext42_P2_ext.fits<br>
+rev0970_27_9_23_afree_2M_P3_ext42_P2_ext2.fits<br>
+↓<br>
+rev0970_27_9_23_afree_2M_P3_ext42_P2_ext103.fits<br>
