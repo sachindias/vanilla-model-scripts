@@ -131,19 +131,18 @@ def extract_MCMC_data(MCMC_file_location, MCMC_base_filenames, params, start_tim
     return MCMC_values
 
 #EXTRACTS THE DATA FROM THE NS FILE AND PUTS INTO AN ARRAY PER PARAMETER
-def extract_NS_data(NS_file_location, NS_filename):
+def extract_NS_data(NS_file_location, NS_filename, params):
     Nested_Sampling = open("%s/%s.txt" %(NS_file_location, NS_filename), "r")
     lines = Nested_Sampling.readlines()
     Nested_Sampling.close()
     
     #IGNORE FIRST LINE AND SORT VALUES INTO THE ARRAY
-    NS_values = [[]] * len(params) #EMPTY ARRAY FOR ALL NS PARAMETER VALUES
-    for line in lines:
-        if (line == lines[0]):
-            print("IGNORED FIRST LINE:", line[0:-1])
-        else:
-            for n in range(len(params)):
-                NS_values[n] = NS_values[n] + [float(line.split(" ")[n])]
+    print("IGNORED FIRST LINE:", lines[0])
+    NS_values = [[] for _ in range(len(params))] #EMPTY ARRAY FOR ALL NS PARAMETER VALUES
+    for line in lines[1:]:  # skip first line
+        values = line.split()
+        for n in range(len(params)):
+            NS_values[n].append(float(values[n]))
 
     NS_values = unlog_NS_Mdd_and_norm_R(params, NS_values, lines)
 
@@ -155,7 +154,7 @@ def extract_NS_data(NS_file_location, NS_filename):
 #UNLOGS NS PARAMETERS TO BRING IN LINE WITH MCMC VALUES
 def unlog_NS_Mdd_and_norm_R(params, NS_values, lines):
     #CHECK WHICH POSITIONS Mdd & norm_R ARE
-    Mdd_pos = np.where(np.array(params) == "Mdd__40")[0][0]
+    Mdd_pos = np.where(np.array(params) == "Mdd__40")[0][0] 
     norm_R_pos = np.where(np.array(params) == "norm__60")[0][0]
     
     #UNLOG PARAMETERS
@@ -214,7 +213,7 @@ MCMC_values = extract_MCMC_data(MCMC_file_location, MCMC_base_filenames, params,
 NS_filename = "equal_weighted_post_rev0966"
 NS_file_location = "NS"
 
-NS_values = extract_NS_data(NS_file_location, NS_filename)
+NS_values = extract_NS_data(NS_file_location, NS_filename, params)
    
 #PLOTTING
 save_filename = "rev0966_afree_MCMC_NS_Histogram_Comparison"
