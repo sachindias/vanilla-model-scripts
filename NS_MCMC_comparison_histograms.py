@@ -103,32 +103,53 @@ def get_params(MCMC_file_location, MCMC_base_filenames, start_timer):
     return params
 
 #EXTRACTS THE DATA FROM EACH OF THE MCMC SAMPLES AND PUTS INTO AN ARRAY PER PARAMETER
-def extract_MCMC_data(MCMC_file_location, MCMC_base_filenames, params, start_timer):
+def extract_MCMC_data(MCMC_file_location, MCMC_base_filenames, params, start_timer, no_walkers, scale_down_factor):
 
-    i = 1
+    i = 0
     MCMC_values = [[]] * len(params) #EMPTY ARRAY FOR ALL MCMC PARAMETER VALUES
     
     #EXTRACTS DATA FOR EACH FIELD AND EACH SAMPLE AND ADDS TO THE ARRAY
-    while (i < len(params) + 1):
+    while (i < len(params)):
         for n in range(3):   
             hdul = fits.open('%s/%s%s.fits' %(MCMC_file_location, MCMC_base_filenames, n+1))
             cols = hdul[1].columns
             data = hdul[1].data
             
-            param_array = data[params[i-1]]
+            param_array = data[params[i]]
             
             if (n == 0):
-                MCMC_values[i-1] = param_array
+                MCMC_values[i] = param_array
             else:
-                MCMC_values[i-1] = np.concatenate((MCMC_values[i-1], param_array))
+                MCMC_values[i] = np.concatenate((MCMC_values[i], param_array))
                 
+        print('PARAM %s: %s, TIME: %s' %(i+1, params[i], datetime.datetime.now() - start_timer))
         i = i + 1
-        print('PARAM %s: %s, TIME: %s' %(i-1, params[i - 2], datetime.datetime.now() - start_timer))
 
     print("\nMCMC DATA EXTRACTED")  
     print("--------------------------------------------")
     
-    return MCMC_values
+    thinned_MCMC_values = MCMC_thinning(params, MCMC_values, no_walkers, scale_down_factor)
+    
+    return thinned_MCMC_values
+
+#THINS THE MCMC CHAIN PER WALKER
+def MCMC_thinning(params, MCMC_values, no_walkers, scale_down_factor):
+    thinned_MCMC_values = [[]] * len(params)
+    
+    for n in range(len(params)):
+        for k in range(no_walkers):
+            param_values_thinned = MCMC_values[n][k::scale_down_factor]
+            
+            if (n == 0) & (k == 0):
+                thinned_MCMC_values[n] = param_values_thinned
+            else:
+                thinned_MCMC_values[n] = np.concatenate((thinned_MCMC_values[n], param_values_thinned))
+                
+        print('PARAM %s: %s, TIME: %s' %(n + 1, params[n], datetime.datetime.now() - start_timer))
+    print("\nMCMC DATA THINNED")  
+    print("--------------------------------------------")
+    
+    return thinned_MCMC_values
 
 #EXTRACTS THE DATA FROM THE NS FILE AND PUTS INTO AN ARRAY PER PARAMETER
 def extract_NS_data(NS_file_location, NS_filename, params):
@@ -207,7 +228,7 @@ MCMC_base_filenames = "rev0966_afree_2M_SAMPLE"
 MCMC_file_location = "MCMC"
 
 params = get_params(MCMC_file_location, MCMC_base_filenames, start_timer)
-MCMC_values = extract_MCMC_data(MCMC_file_location, MCMC_base_filenames, params, start_timer)
+MCMC_values = extract_MCMC_data(MCMC_file_location, MCMC_base_filenames, params, start_timer, 200, 600)
         
 #NESTED SAMPLING
 NS_filename = "equal_weighted_post_rev0966"
@@ -216,7 +237,7 @@ NS_file_location = "NS"
 NS_values = extract_NS_data(NS_file_location, NS_filename, params)
    
 #PLOTTING
-save_filename = "rev0966_afree_MCMC_NS_Histogram_Comparison"
+save_filename = "GRO5_afree_MCMC_NS_Histogram_Comparison"
 plotter(params, MCMC_values, NS_values, save_filename)
     
 print("TOTAL TIME: %s" %(datetime.datetime.now() - start_timer))
