@@ -229,7 +229,7 @@ def violin_plotter(combined_diff_values, params, diff, save_filename = False, pl
     columns = 4
     rows = int(np.ceil(len(params)/4))
     
-    fig = plt.figure(figsize=(6*columns*len(combined_diff_values), 6*rows))
+    fig = plt.figure(figsize=(6*columns*len(combined_diff_values), 6*rows), constrained_layout=True)
     grid = fig.add_gridspec(rows, columns)
     
     label_array = []
@@ -271,7 +271,8 @@ def violin_plotter(combined_diff_values, params, diff, save_filename = False, pl
         print("PLOTTING TIME: ", params[n], ":", datetime.datetime.now() - start_timer)
      
     #ADJUST SUBPLOT SPACING
-    plt.subplots_adjust(wspace = 1, hspace = 0.5)
+    wspace = 1 / len(combined_diff_values)
+    plt.subplots_adjust(wspace = wspace, hspace = 0.5)
     
     #SAVE PLOT TO A PNG FILE
     if (save_filename!= False):
@@ -369,3 +370,4 @@ for n in range(len(all_MCMC_base_filenames)):
 violin_plotter(all_combined_values, all_params[0], "REV", save_filename = "GRO_MCMC_NS_Violin_Comparison", plot_in_console = True)
 
 print("\nTOTAL TIME: ", datetime.datetime.now() - start_timer)
+
