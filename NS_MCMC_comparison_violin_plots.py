@@ -3,6 +3,8 @@ from astropy.io import fits
 import matplotlib.pyplot as plt
 import datetime
 import pandas as pd
+import seaborn as sns
+import matplotlib.patches as mpatches
 
 #TIMER
 start_timer = datetime.datetime.now()
@@ -104,34 +106,54 @@ def get_params(MCMC_file_location, MCMC_base_filenames, start_timer):
     return params
 
 #EXTRACTS THE DATA FROM EACH OF THE MCMC SAMPLES AND PUTS INTO AN ARRAY PER PARAMETER
-def extract_MCMC_data(MCMC_file_location, MCMC_base_filenames, params, start_timer):
+def extract_MCMC_data(MCMC_file_location, MCMC_base_filenames, params, start_timer, no_walkers, scale_down_factor):
 
-    i = 1
+    i = 0
     MCMC_values = [[]] * len(params) #EMPTY ARRAY FOR ALL MCMC PARAMETER VALUES
     
     #EXTRACTS DATA FOR EACH FIELD AND EACH SAMPLE AND ADDS TO THE ARRAY
-    while (i < len(params) + 1):
+    while (i < len(params)):
         for n in range(3):   
             hdul = fits.open('%s/%s%s.fits' %(MCMC_file_location, MCMC_base_filenames, n+1))
             cols = hdul[1].columns
             data = hdul[1].data
             
-            param_array = data[params[i-1]]
+            param_array = data[params[i]]
             
             if (n == 0):
-                MCMC_values[i-1] = param_array
+                MCMC_values[i] = param_array
             else:
-                MCMC_values[i-1] = np.concatenate((MCMC_values[i-1], param_array))
+                MCMC_values[i] = np.concatenate((MCMC_values[i], param_array))
                 
+        print('PARAM %s: %s, TIME: %s' %(i+1, params[i], datetime.datetime.now() - start_timer))
         i = i + 1
-        print('PARAM %s: %s, TIME: %s' %(i-1, params[i - 2], datetime.datetime.now() - start_timer))
 
     print("\nMCMC DATA EXTRACTED")  
     print("--------------------------------------------")
     
-    return MCMC_values
+    thinned_MCMC_values = MCMC_thinning(params, MCMC_values, no_walkers, scale_down_factor)
+    
+    return thinned_MCMC_values
 
-#EXTRACTS THE DATA FROM THE NS FILE AND PUTS INTO AN ARRAY PER PARAMETER
+#THINS THE MCMC CHAIN PER WALKER
+def MCMC_thinning(params, MCMC_values, no_walkers, scale_down_factor):
+    thinned_MCMC_values = [[]] * len(params)
+    
+    for n in range(len(params)):
+        for k in range(no_walkers):
+            param_values_thinned = MCMC_values[n][k::scale_down_factor]
+            
+            if (n == 0) & (k == 0):
+                thinned_MCMC_values[n] = param_values_thinned
+            else:
+                thinned_MCMC_values[n] = np.concatenate((thinned_MCMC_values[n], param_values_thinned))
+                
+        print('PARAM %s: %s, TIME: %s' %(n + 1, params[n], datetime.datetime.now() - start_timer))
+    print("\nMCMC DATA THINNED")  
+    print("--------------------------------------------")
+    
+    return thinned_MCMC_values
+
 #EXTRACTS THE DATA FROM THE NS FILE AND PUTS INTO AN ARRAY PER PARAMETER
 def extract_NS_data(NS_file_location, NS_filename, params):
     Nested_Sampling = open("%s/%s.txt" %(NS_file_location, NS_filename), "r")
@@ -166,52 +188,184 @@ def unlog_NS_Mdd_and_norm_R(params, NS_values, lines):
 
     return NS_values
 
-def combine_NS_MCMC_arrays(MCMC_values, NS_values, params, rev):
+def combine_NS_MCMC_arrays(MCMC_values, NS_values, params, diff):
     combined_values = np.array([None]*(len(params)+2))
-    rev_values = np.array([rev]*(len(MCMC_values[0]) + len(NS_values[0])))
+    diff_values = np.array([diff]*(len(MCMC_values[0]) + len(NS_values[0])))
     NS_MCMC_values = np.array(["MCMC"]*len(MCMC_values[0]) + ["NS"]*len(NS_values[0]))
     
     for n in range(len(params)):
         combined_values[n] = np.concatenate((MCMC_values[n], NS_values[n]), axis=None)
-    #print(combined_values)
-    combined_values[-2] = rev_values
+    combined_values[-2] = diff_values
     combined_values[-1] = NS_MCMC_values
     
     return combined_values
-'''
-def combine_revs(all_combined_values, params, revs):
-    combined_rev_values = np.array([None]*(len(params)))
-    revs_values = []
-    for n in range(len(all_combined_values)):
-        revs_values = revs_values + ([revs[n]]*len(all_combined_values[n]))
-        for i in range(len(params)):
-            combined_rev_values[n] = np.concatenate((combined_rev_values[n], combined_rev_values[n]), axis=None)
-    revs_values = np.array(revs_values)                          
 
-    return combined_rev_values, revs_values
-'''
-def violin_plotter(combined_rev_values, params):
+def violin_plotter(combined_diff_values, params, diff, save_filename = False, plot_in_console = False):
     
-    violin_plot_params = params + ["REV", "NS or MCMC"]
-    df = pd.DataFrame(dict(zip(violin_plot_params, combined_rev_values)))
+    pink_colour = "#DC267F"
+    blue_colour = "#648FFF"
     
-    print(df)
+    dfs = []
+    
+    #PUT VALUES INTO DATAFRAME WITH ADDITIONAL PARAMS FOR PLOTTING
+    dfs = []
+    for diff_group in combined_diff_values:
+        param_arrays = diff_group[:-2]
+        diff_array = diff_group[-2]
+        label_array = diff_group[-1]
+        
+        #BUILD DICT DATA FRAME
+        col_dict = {params[i]: param_arrays[i] for i in range(len(params))}
+        col_dict[diff] = diff_array
+        col_dict['NS or MCMC'] = label_array
+        
+        df_group = pd.DataFrame(col_dict)
+        dfs.append(df_group)
+    
+    #COMBINE ALL DIFF GROUPS
+    df = pd.concat(dfs, ignore_index=True)
+    
+    #PLOTTING SET UP
+    columns = 4
+    rows = int(np.ceil(len(params)/4))
+    
+    fig = plt.figure(figsize=(6*columns*len(combined_diff_values), 6*rows))
+    grid = fig.add_gridspec(rows, columns)
+    
+    label_array = []
+    
+    for n in range(len(params)):        
+        grid_row = int(n/columns)
+        grid_column = n%columns
+        ax = fig.add_subplot(grid[grid_row, grid_column])
+    
+        temp = sns.violinplot(data=df, x=diff, y=params[n], 
+                       hue='NS or MCMC', 
+                       split=True,
+                       palette=[blue_colour,pink_colour], 
+                       cut = 0, bw=.2, inner = None
+                       )
+        
+        label_array.append(temp)
+        ax.get_legend().remove()
+        
+        #ADD LEGEND BELOW THE FINAL PLOT
+        mcmc_patch = mpatches.Patch(color=blue_colour, label="MCMC")
+        ns_patch = mpatches.Patch(color=pink_colour, label="Nested Sampling")
+        fig.legend(handles=[mcmc_patch, ns_patch], loc="lower center", fontsize=30, 
+                   ncol=2, bbox_to_anchor=(0.5, 0), frameon=False)
+        
+        #PLOT SETTINGS
+        plt.xlabel('GRO', size=34, labelpad = 10)
+        plt.ylabel(params[n], size=34, labelpad = 15)
+        plt.yticks(fontsize=26)
+        plt.xticks(fontsize=26)
+        
+        plt.tick_params(axis="both", direction = "in", width = 1.5, length = 4)
+        
+        sns.despine()
+        sns.set_style("ticks")
+        ax.spines['left'].set_linewidth(1.5)
+        ax.spines['bottom'].set_linewidth(1.5)
+        
+        print("PLOTTING TIME: ", params[n], ":", datetime.datetime.now() - start_timer)
+     
+    #ADJUST SUBPLOT SPACING
+    plt.subplots_adjust(wspace = 1, hspace = 0.5)
+    
+    #SAVE PLOT TO A PNG FILE
+    if (save_filename!= False):
+        save_timer = datetime.datetime.now() #ADDITIONAL TIMER FOR PLOT SAVING
+        plt.savefig("%s.png" %save_filename, bbox_inches = "tight")
+        print("\nSAVE TIME: %s" %(datetime.datetime.now() - save_timer))
+    
+    #PLOT IN CONSOLE
+    if (plot_in_console):
+        plt.show()
+    
+#-----------------------------------------
+#MAIN EXAMPLE SCRIPT
 
-
-#
-
-MCMC_base_filenames = "rev0966_afree_2M_SAMPLE"
+#ALL MCMC FILES
+all_MCMC_base_filenames = [
+    "rev0956_afree_2M_SAMPLE",
+    "rev0964a_afree_2M_SAMPLE",
+    "rev0964b_afree_2M_SAMPLE",
+    "rev0965_afree_2M_SAMPLE",
+    "rev0966_afree_2M_SAMPLE",
+    "rev0970_afree_2M_SAMPLE",
+    ]
 MCMC_file_location = "MCMC"
 
-params = get_params(MCMC_file_location, MCMC_base_filenames, start_timer)
-MCMC_values = extract_MCMC_data(MCMC_file_location, MCMC_base_filenames, params, start_timer)
-        
-#NESTED SAMPLING
-NS_filename = "equal_weighted_post_rev0966"
+#ALL NS FILES
+all_NS_filenames = [
+    "equal_weighted_post_rev0956",
+    "equal_weighted_post_rev0964a",
+    "equal_weighted_post_rev0964b",
+    "equal_weighted_post_rev0965",
+    "equal_weighted_post_rev0966",
+    "equal_weighted_post_rev0970"
+    ]
 NS_file_location = "NS"
 
-NS_values = extract_NS_data(NS_file_location, NS_filename, params)
+#REV NAMES
+GRO = [
+        "1",
+        "2",
+        "3",
+        "4",
+        "5",
+        "6",
+        ]
 
-combined_values = combine_NS_MCMC_arrays(MCMC_values, NS_values, params, "GRO5")
-#combined_rev_values, revs_values = combine_revs([combined_values], params, ["GRO5"])
-violin_plotter(combined_values, params)
+all_combined_values = []
+all_params = []
+ 
+for n in range(len(all_MCMC_base_filenames)):
+    print("ENSURING SAME PARAMS ON: GRO%s\n" %GRO[n])
+    MCMC_base_filenames = all_MCMC_base_filenames[n]
+    params = get_params(MCMC_file_location, MCMC_base_filenames, start_timer)
+    all_params.append(params)
+    
+#ENUSRES THAT ALL THE SAME PARAMETERS ARE USED
+#THIS IS JUST A SIMPLE PLOTTER AND NEEDS ALL PARAMETERS TO BE THE SAME
+#SOMETHING MORE BESPOKE COULD BE WRITTEN TO DEAL WITH THOSE CASES
+if (len(set(len(x) for x in all_params)) != 1):
+    check_spin_present = 1 if 'a__37' in all_params[0] else 0
+    for n in range(len(all_params)):
+        if (('a__37' in all_params[n]) != check_spin_present):
+            check_spin_present = 2
+            
+    if (check_spin_present == 2):
+        for params in all_params:
+            if 'a__37' in params:
+                params.remove('a__37')
+                
+if (len(set(len(x) for x in all_params)) != 1):
+    min_length = min(len(x) for x in all_params)
+    for n in range(len(all_params)):
+        all_params[n] = all_params[n][0:min_length]      
+
+#DEAL WITH EACH REVOLUTION IN TURN & SAVE IN LARGE OVERALL ARRAY
+for n in range(len(all_MCMC_base_filenames)):
+    print("COMBINING VALUES FOR: GRO%s\n" %GRO[n])
+    #SELECT FILE
+    MCMC_base_filenames = all_MCMC_base_filenames[n]
+    NS_filename = all_NS_filenames[n]
+    params = all_params[n]
+    
+    #MCMC
+    MCMC_values = extract_MCMC_data(MCMC_file_location, MCMC_base_filenames, params, start_timer,
+                                no_walkers = 200, scale_down_factor = 600)
+        
+    #NESTED SAMPLING
+    NS_values = extract_NS_data(NS_file_location, NS_filename, params)
+
+    #COMBINING
+    combined_values = combine_NS_MCMC_arrays(MCMC_values, NS_values, params, GRO[n])
+    all_combined_values.append(combined_values)
+
+#MAKE THE VIOLIN PLOTS
+violin_plotter(all_combined_values, all_params[0], "REV", save_filename = "GRO_MCMC_NS_Violin_Comparison", plot_in_console = True)
+
+print("\nTOTAL TIME: ", datetime.datetime.now() - start_timer)

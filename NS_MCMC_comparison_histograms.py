@@ -228,7 +228,7 @@ MCMC_base_filenames = "rev0966_afree_2M_SAMPLE"
 MCMC_file_location = "MCMC"
 
 params = get_params(MCMC_file_location, MCMC_base_filenames, start_timer)
-MCMC_values = extract_MCMC_data(MCMC_file_location, MCMC_base_filenames, params, start_timer, 200, 600)
+MCMC_values = extract_MCMC_data(MCMC_file_location, MCMC_base_filenames, params, start_timer, no_walkers = 200, scale_down_factor = 600)
         
 #NESTED SAMPLING
 NS_filename = "equal_weighted_post_rev0966"
