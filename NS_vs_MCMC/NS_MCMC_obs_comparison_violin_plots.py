@@ -200,7 +200,7 @@ def combine_NS_MCMC_arrays(MCMC_values, NS_values, params, diff):
     
     return combined_values
 
-def violin_plotter(combined_diff_values, params, diff, save_filename = False, plot_in_console = False):
+def violin_plotter(combined_diff_values, params, diff, x_axis_label, save_filename = False, plot_in_console = False):
     
     pink_colour = "#DC267F"
     blue_colour = "#648FFF"
@@ -256,7 +256,7 @@ def violin_plotter(combined_diff_values, params, diff, save_filename = False, pl
                    ncol=2, bbox_to_anchor=(0.5, 0), frameon=False)
         
         #PLOT SETTINGS
-        plt.xlabel('GRO', size=34, labelpad = 10)
+        plt.xlabel(x_axis_label, size=34, labelpad = 10)
         plt.ylabel(params[n], size=34, labelpad = 15)
         plt.yticks(fontsize=26)
         plt.xticks(fontsize=26)
@@ -367,7 +367,7 @@ for n in range(len(all_MCMC_base_filenames)):
     all_combined_values.append(combined_values)
 
 #MAKE THE VIOLIN PLOTS
-violin_plotter(all_combined_values, all_params[0], "REV", save_filename = "GRO_MCMC_NS_Violin_Comparison", plot_in_console = True)
+violin_plotter(all_combined_values, all_params[0], "REV", "GRO", save_filename = "GRO_MCMC_NS_Violin_Comparison", plot_in_console = True)
 
 print("\nTOTAL TIME: ", datetime.datetime.now() - start_timer)
 
