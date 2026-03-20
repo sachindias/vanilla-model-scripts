@@ -1,10 +1,4 @@
-import numpy as np
-from astropy.io import fits
-import matplotlib.pyplot as plt
 import datetime
-import pandas as pd
-import seaborn as sns
-import matplotlib.patches as mpatches
 from MCMC_NS_comparisons_violin_plots import get_params, extract_MCMC_data, extract_NS_data, combine_NS_MCMC_arrays, violin_plotter
 
 #TIMER
