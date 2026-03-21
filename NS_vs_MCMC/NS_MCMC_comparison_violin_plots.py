@@ -195,6 +195,17 @@ def combine_NS_MCMC_arrays(MCMC_values, NS_values, params, diff):
     
     return combined_values
 
+def combined_NS_MCMC_array_concatenated(combined_values):
+    concatenated_array = []
+    
+    for n in range(len(combined_values[0])):
+        concatenated_array.append(combined_values[0][n])
+        
+        for i in range(1, len(combined_values)):
+            concatenated_array[n] = np.concatenate((concatenated_array[n], combined_values[i][n]))
+    
+    return concatenated_array
+
 def violin_plotter(combined_diff_values, params, diff, x_axis_label, start_timer,
                    save_filename = False, plot_in_console = False):
     
@@ -225,7 +236,7 @@ def violin_plotter(combined_diff_values, params, diff, x_axis_label, start_timer
     columns = 4
     rows = int(np.ceil(len(params)/4))
     
-    fig = plt.figure(figsize=(6*columns*len(combined_diff_values), 6*rows), constrained_layout=True)
+    fig = plt.figure(figsize=(6*columns*len(combined_diff_values), 6*2*rows), constrained_layout=True)
     grid = fig.add_gridspec(rows, columns)
     
     label_array = []
