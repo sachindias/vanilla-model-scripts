@@ -1,5 +1,13 @@
 ## Notes On Nested Sampling
 
+## What is in this Folder?
+
+**Custom_Priors:** These are probability distributions (not previously included in PyXspec) for priors needed in the Nested Sampling analysis. 
+
+**NS_Run_Scripts:** Here are some example scripts needed to run the Nested Sampling analysis. 
+
+**Comparison Scripts:** Due to unreliable results with the smaller step sizes, these scripts give examples for how to check for consistency in both parameter values and the evidence.
+
 ### Running Scripts
 
 1. initialise **heasoft**.
