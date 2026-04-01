@@ -1,1 +1,1 @@
-# MCMC - XSPEC 
+# MCMC - EPIC (+ NuSTAR) 
