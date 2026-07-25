@@ -545,10 +545,6 @@ def contour_plots(df, contours, hist2d, points, o, n, ax, no_points, no_cols, bi
                 loc_counter = loc_counter + 1
             
             mulitple_counter = 0 #in case it hasn't updated due to hitting sigma limit
-            
-            #***
-            #print("Attempted sigma = %s, Actual sigma = %.4f" %(sigma_aim, sigma_total)) 
-            #***
 
             #cycles through all bin positions which need to be plotted
             #i.e where the positional_array = 1
