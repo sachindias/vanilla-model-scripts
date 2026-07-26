@@ -4,7 +4,10 @@ import datetime
 import pandas as pd
 import seaborn as sns
 import matplotlib.patches as mpatches
-from ..NS_vs_MCMC/NS_MCMC_comparison_violin_plots import get_params, extract_MCMC_data, extract_NS_data, combine_NS_MCMC_arrays, combined_NS_MCMC_array_concatenated
+
+#THE BELOW FUNCTIONS ARE IN A SEPARATE FILE TO MAKE THIS SCRIPT EASIER TO READ
+#THIS FILE SHOULD BE IN THE SAME DIRECTORY AS THIS SCRIPT BEFORE RUNNING
+from NS_MCMC_comparison_violin_plots import get_params, extract_MCMC_data, extract_NS_data, combine_NS_MCMC_arrays, combined_NS_MCMC_array_concatenated
 
 #TIMER
 start_timer = datetime.datetime.now()
