@@ -1,5 +1,5 @@
 import datetime
-from MCMC_NS_comparisons_violin_plots import get_params, extract_MCMC_data, extract_NS_data, combine_NS_MCMC_arrays, violin_plotter
+from NS_MCMC_comparison_violin_plots import get_params, extract_MCMC_data, extract_NS_data, combine_NS_MCMC_arrays, violin_plotter
     
 #TIMER
 start_timer = datetime.datetime.now()

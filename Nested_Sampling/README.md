@@ -20,7 +20,7 @@ To run the scripts in **NS_Run_Scripts**, you will need to follow these steps:
 2. activate **conda** environment.
 3. `cd` into the correct directory.
 4. Set **OpenMP** to use a single thread.
-5. Run the script using `mpiexec` for parallel comupting.
+5. Run the script using `mpiexec` for parallel computing.
 
 e.g.
 ```

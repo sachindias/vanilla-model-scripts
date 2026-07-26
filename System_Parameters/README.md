@@ -12,6 +12,6 @@ i.e. using priors on the mass function, mass ratio and inclination.
 using the 10th and 90th centiles from the distribution of black hole masses (see above).
 
 Justification behind values used in the code can be found in: 
-  - [Dias et al. (2024)](https://ui.adsabs.harvard.edu/abs/2024MNRAS.529.1752D/abstract) - for MAXI J1820=070
+  - [Dias et al. (2024)](https://ui.adsabs.harvard.edu/abs/2024MNRAS.529.1752D/abstract) - for MAXI J1820+070
   - Dias et al. (in prep) - for GRO J1655-40
   - [Dias (2024)](https://figshare.le.ac.uk/articles/thesis/A_Bayesian_Approach_to_Black_Hole_Spin_and_Accretion_Properties/26251382?file=47583947) - for all sources, including the above two.
