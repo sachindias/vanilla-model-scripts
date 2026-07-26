@@ -30,7 +30,7 @@ for n in range(len(XRBs)):
     
     # distance r, in steps of dr (units: kpc)
     dr = 0.01
-    r = np.arange(0, 20, dr)
+    r = np.arange(dr, 20, dr)
     
     # likelihood (normal for parx data; as a function of 1/r)
     r_like = stat.norm.pdf(parx, 1/r, err_parx)
@@ -78,7 +78,7 @@ for n in range(len(XRBs)):
                 dx.append(r_new[0])
             
         sum_e = sum_e + (r_posterior_new[count] * dx_temp)
-        mean = mean + (dist_temp * r_posterior[count] * dx_temp)
+        mean = mean + (dist_temp * r_posterior_new[count] * dx_temp)
     
     mode_pos = np.where(r_posterior == np.max(r_posterior))[0][0]
     mode = r[mode_pos]
