@@ -1,4 +1,4 @@
-# Notes On Nested Sampling
+# Notes On NS vs MCMC
 
 ---
 
