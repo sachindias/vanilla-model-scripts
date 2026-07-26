@@ -1,4 +1,4 @@
-#rev3531 = Obs1
+#rev0966 = GRO5
 
 #===========================
 #load up heasoft
@@ -8,11 +8,11 @@
 #===========================
 #basic setup
 #===========================
-cd /scratch/spectre/s/sdd9/post_processing/MAXI_J1820p070/EPIC_corrections/rev3531/processed/pn/
+cd /scratch/spectre/s/sdd9/post_processing/GRO_J1655_40/EPIC_correction/rev0966/processed/
 
 xspec
 
-data rev3531_cor_pileup_PN_spectrum_grp.fits
+data rev0966_cor_PN_spectrum_grp.fits
 
 lmod relxill /home/s/sdd9/relxill_v2_1/
 
@@ -23,12 +23,13 @@ ignore 1.75-2.35
 statistic chi
 setplot energy
 
+backgrnd none
 energies extend low 0.01 50 log
 
 #===========================
 #load in the model
 #===========================
-@rev3531_1_9_22_a0.xcm
+@rev0966_27_9_23_afree.xcm
 
 #===========================
 #run the chain to generate
@@ -41,20 +42,26 @@ chain type gw
 chain proposal gaussian deltas 0.001
 chain length 1000
 chain walkers 1000
-chain run ICP_rev3531_1_9_22_a0.fits
+chain run ICP_rev0966_27_9_23_afree.xcm.fits
 
 #===========================
 #run the chain to generate
 #1 point per walker
-#this can be copied and
-#overwritten for each batch
 #===========================
 chain clear
 chain type gw
 chain proposal gaussian deltas 0.001
 chain length 200
 chain walkers 200
-chain run rev3531_1_9_22_a0_2M.fits
+
+#this version can be used when creating the first batch
+chain run rev0966_27_9_23_afree_2M.fits
+
+#this version can be copied (and then overwritten) for each batch
+#chain run rev0966_27_9_23_afree_rewritable_200.fits
+
+#this version can be used when creating a new batch to deal with clustering
+#chain run rev0966_27_9_23_afree_2M_P2.fits
 
 exit
 date

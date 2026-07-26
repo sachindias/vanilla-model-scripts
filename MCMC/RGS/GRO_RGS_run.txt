@@ -1,0 +1,85 @@
+#rev0964 = rev0964a = GRO2
+#rev0964b = GRO3
+#rev0965 = GRO4
+
+#===========================
+#load up heasoft
+#===========================
+. /home/s/sdd9/heasoft-6.30.1/x86_64-pc-linux-gnu-libc2.34/headas-init.sh
+
+#===========================
+#basic setup
+#===========================
+cd /scratch/spectre/s/sdd9/post_processing/GRO_J1655_40/comb_RGS_spectra
+
+xspec
+
+#plot simultaneously
+data 1:1 rev0964_rgs_src.pha 2:2 rev0964b_rgs_src.pha 3:3 rev0965_rgs_src.pha
+
+statistic cstat
+
+setplot area
+setplot wave
+setplot wave perhz off
+setplot xlog off
+setplot rebin 60 6
+
+ignore 1:1 **-11.0
+ignore 1:1 24.0-**
+
+ignore 2:2 **-11.0
+ignore 2:2 24.0-**
+
+ignore 3:3 **-11.0
+ignore 3:3 24.0-**
+
+ignore 1:1 22.7-23.2
+ignore 2:2 22.7-23.2
+ignore 3:3 22.7-23.2
+
+energies extend low 0.01 50 log
+
+#===========================
+#load in the model & log
+#===========================
+@GRO_RGS_20_2_23.xcm
+date +"%d/%m/%Y" >> GRO_J1655_40_RGS_run_log.txt
+echo " "  >> GRO_J1655_40_RGS_run_log.txt
+date >> GRO_J1655_40_RGS_run_log.txt
+echo "model: @GRO_RGS_20_2_23.xcm" >> GRO_J1655_40_RGS_run_log.txt
+
+fit
+
+#===========================
+#load in and run the chain
+#===========================
+chain clear
+chain type gw
+chain proposal gaussian deltas 0.001
+
+chain walkers 100
+parallel walkers 25
+
+chain burn 10000
+chain length 50000
+
+echo "run: GRO_J1655_40_RGS_20_2_23_50K" >> GRO_J1655_40_RGS_run_log.txt
+echo "chain length 50000" >> GRO_J1655_40_RGS_run_log.txt
+echo "chain walkers 100" >> GRO_J1655_40_RGS_run_log.txt
+echo "proposal gaussian deltas 0.001" >> GRO_J1655_40_RGS_run_log.txt
+echo "parallel walkers 25" >> GRO_J1655_40_RGS_run_log.txt
+echo " "  >> GRO_J1655_40_RGS_run_log.txt
+date >> GRO_J1655_40_RGS_run_log.txt
+echo " "  >> GRO_J1655_40_RGS_run_log.txt
+
+chain run GRO_J1655_40_RGS_20_2_23_50K.fits
+
+echo " "  >> GRO_J1655_40_RGS_run_log.txt
+date >> GRO_J1655_40_RGS_run_log.txt
+echo "=============================="  >> GRO_J1655_40_RGS_run_log.txt
+echo "=============================="  >> GRO_J1655_40_RGS_run_log.txt
+echo " "  >> GRO_J1655_40_RGS_run_log.txt
+
+exit
+date

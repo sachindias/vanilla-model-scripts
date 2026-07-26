@@ -2,23 +2,24 @@ from astropy.io import fits
 import numpy as np
 import datetime
 
+#TIMER
 start = datetime.datetime.now()
 print(start)
 
 #CALCULATES 16th, 50th and 84th CENTILES
 def quantiles(data):     
         
-        med = np.median(data)
-        err_up = np.quantile(data, 0.84) - med
-        err_down = med - np.quantile(data, 0.16)
+    med = np.median(data)
+    err_up = np.quantile(data, 0.84) - med
+    err_down = med - np.quantile(data, 0.16)
         
-        #MULTIPLIER FOR norm_R
-        if (j == 19):
-            med = med*10**4
-            err_up = err_up*10**4
-            err_down = err_down*10**4
+    #MULTIPLIER FOR norm_R
+    if (j == 19):
+        med = med*10**4
+        err_up = err_up*10**4
+        err_down = err_down*10**4
         
-        return med, err_up, err_down
+    return med, err_up, err_down
    
 #ROUNDS CENTILES TO 3 DECIMAL PLACES
 def rounder(med, err_up, err_low):
@@ -27,6 +28,7 @@ def rounder(med, err_up, err_low):
     str_eu = str(round(err_up, 3))
     str_ed = str(round(err_low, 3))
     
+    #ENSURES CONSITENT SIGNIFICANT FIGURES
     length_m = len(str_med) - str_med.find(".")
     if (length_m < 4):
         str_med = str_med + "0"
@@ -41,9 +43,9 @@ def rounder(med, err_up, err_low):
         
     return str_med, str_eu, str_ed
 
-#########################
-#MAIN CODE###############
-#########################
+##########
+#MAIN CODE
+##########
 
 no_walkers = 200
 scale_down_factor = 600
@@ -60,11 +62,11 @@ REVS = [
 
 Overleaf_params = [
         "$N_H$",
-	    "$N_{O_I}$",
-	    "$N_{O_{II}}$",
-	    "$N_{Ne_{I}}$",
-	    "$N_{Ne_{II}}$",
-	    "$N_{Fe}$",
+	"$N_{O_I}$",
+	"$N_{O_{II}}$",
+	"$N_{Ne_{I}}$",
+	"$N_{Ne_{II}}$",
+	"$N_{Fe}$",
         
         "$\Gamma_{S}$",
         "$f_{scat}$",
@@ -72,16 +74,16 @@ Overleaf_params = [
         "$a$",
     	"$i$",
     	"$M$",
-   		r"$\dot{M}$",
+   	r"$\dot{M}$",
     	"$D$",
     	"$f_{col}$",
         
         "$I_1$",
         "$I_2$",
-	    "$\Gamma_{R}$",
-	    r"$\log(\xi)$",
-	    "$A_{Fe}$",
-	    r"$norm_R (\times 10^{-4})$",
+	"$\Gamma_{R}$",
+	r"$\log(\xi)$",
+	"$A_{Fe}$",
+	r"$norm_R (\times 10^{-4})$",
         
         r"$E_1$",
         r"$\tau_1$",
@@ -93,32 +95,33 @@ Overleaf_params = [
         r"$W$",
         ]
 
-big_array = np.array([None]*len(Overleaf_params))
+table_rows = np.array([None]*len(Overleaf_params))
 
-big_array[0] = r"\textsc{ISMabs}"
-big_array[6] = r"\textsc{SIMPL}"
-big_array[8] = r"\textsc{KERRBB}"
-big_array[14] = r"\textsc{relxillCp}"
-big_array[20] = r"\textsc{gabs$_1$}"
-big_array[22] = r"\textsc{gabs$_2$}"
-big_array[23] = r"\textsc{gabs$_3$}"
-big_array[24] = r"\textsc{smedge}"
+#ADDS MODEL COMPONENTS & '&'S
+table_rows[0] = r"\textsc{ISMabs}"
+table_rows[6] = r"\textsc{SIMPL}"
+table_rows[8] = r"\textsc{KERRBB}"
+table_rows[14] = r"\textsc{relxillCp}"
+table_rows[20] = r"\textsc{gabs$_1$}"
+table_rows[22] = r"\textsc{gabs$_2$}"
+table_rows[23] = r"\textsc{gabs$_3$}"
+table_rows[24] = r"\textsc{smedge}"
 
-for n in range(len(big_array)):
+for n in range(len(table_rows)):
     try:
-        if (len(big_array[n]) > 1):
-            big_array[n] = big_array[n] + " & "
+        if (len(table_rows[n]) > 1):
+            table_rows[n] = table_rows[n] + " & "
     except Exception:
-        big_array[n] = "& "
+        table_rows[n] = "& "
         
-    big_array[n] = big_array[n] + Overleaf_params[n] + " & "
+    table_rows[n] = table_rows[n] + Overleaf_params[n] + " & "
 
-#########################
-#PARAMS##################
-#########################
+#######
+#PARAMS
+#######
 
 for n in range(len(REVS)):
-    print("ON FILE:", n+1)
+    print("ON REV:", n+1, ":", REVS[n])
 
     params = ["H__2", 
               "O_I__10", "O_II__11",
@@ -145,24 +148,25 @@ for n in range(len(REVS)):
             else:
                 temp_param_array = np.concatenate((temp_param_array, data[params[j]]), axis=0)
     
-        temp_array = np.array([])
+        temp = np.array([])
         for k in range(no_walkers):
-            temp_array = np.concatenate((temp_array, temp_param_array[k::skip_factor]))
+            temp = np.concatenate((temp, temp_param_array[k::skip_factor]))
 
-        med, err_up, err_low = quantiles(temp_array)
+        #APPEND VALUES TO LIST OF ALL TABLE ROWS
+        med, err_up, err_low = quantiles(temp)
         str_med, str_eu, str_ed = rounder(med, err_up, err_low)
-        big_array[j] = big_array[j] + str_med + "$^{+" + str_eu + "}_{-" + str_ed + "}$" + " & "  
+        table_rows[j] = table_rows[j] + str_med + "$^{+" + str_eu + "}_{-" + str_ed + "}$" + " & "  
 
-#########################
-#GABS####################
-#########################
+    #####
+    #GABS
+    #####
 
     #FOR MODELS WITHOUT A GABS COMPONENT
     if (n < 1):
-        big_array[20] = big_array[20] + "-" + " & "
-        big_array[21] = big_array[21] + "-" + " & "
-        big_array[22] = big_array[22] + "-" + " & "
-        big_array[23] = big_array[23] + "-" + " & "
+        table_rows[20] = table_rows[20] + "-" + " & "
+        table_rows[21] = table_rows[21] + "-" + " & "
+        table_rows[22] = table_rows[22] + "-" + " & "
+        table_rows[23] = table_rows[23] + "-" + " & "
         
     #FOR MODELS WITH A GABS COMPONENT
     if (n > 0):
@@ -180,24 +184,25 @@ for n in range(len(REVS)):
                 else:
                     temp_param_array = np.concatenate((temp_param_array, data[params[j]]), axis=0)
         
-            temp_array = np.array([])
+            temp = np.array([])
             for k in range(no_walkers):
-                temp_array = np.concatenate((temp_array, temp_param_array[k::skip_factor]))
+                temp = np.concatenate((temp, temp_param_array[k::skip_factor]))
 
-            med, err_up, err_low = quantiles(temp_array)
+            #APPEND VALUES TO LIST OF ALL TABLE ROWS
+            med, err_up, err_low = quantiles(temp)
             str_med, str_eu, str_ed = rounder(med, err_up, err_low)
-            big_array[j] = big_array[j] + str_med + "$^{+" + str_eu + "}_{-" + str_ed + "}$" + " & "  
+            table_rows[j] = table_rows[j] + str_med + "$^{+" + str_eu + "}_{-" + str_ed + "}$" + " & "  
  
 
-#########################
-#SMEDGE##################
-#########################
+    #######
+    #SMEDGE
+    #######
    
     #FOR MODELS WITHOUT A SMEDGE COMPONENT
     if (n < 4):
-        big_array[24] = big_array[24] + "-" + " & "
-        big_array[25] = big_array[25] + "-" + " & "
-        big_array[26] = big_array[26] + "-" + " & "
+        table_rows[24] = table_rows[24] + "-" + " & "
+        table_rows[25] = table_rows[25] + "-" + " & "
+        table_rows[26] = table_rows[26] + "-" + " & "
 
     #FOR MODELS WITH A SMEDGE COMPONENT
     if (n > 3):
@@ -215,23 +220,24 @@ for n in range(len(REVS)):
                 else:
                     temp_param_array = np.concatenate((temp_param_array, data[params[j]]), axis=0)
         
-            temp_array = np.array([])
+            temp = np.array([])
             for k in range(no_walkers):
-                temp_array = np.concatenate((temp_array, temp_param_array[k::skip_factor]))
+                temp = np.concatenate((temp, temp_param_array[k::skip_factor]))
 
-            med, err_up, err_low = quantiles(temp_array)
+            #APPEND VALUES TO LIST OF ALL TABLE ROWS
+            med, err_up, err_low = quantiles(temp)
             str_med, str_eu, str_ed = rounder(med, err_up, err_low)
-            big_array[j] = big_array[j] + str_med + "$^{+" + str_eu + "}_{-" + str_ed + "}$" + " & "  
+            table_rows[j] = table_rows[j] + str_med + "$^{+" + str_eu + "}_{-" + str_ed + "}$" + " & "  
          
-#PRINTS OUT TABLE FOR LaTeX USE
+#PRINT THE TOTAL LIST OF STRINGS TO BUILD THE TABLE
 print("\n")
 print(r"\hline")
 print(r"\hline")    
 hlines = np.array([6, 8, 14, 20, 22, 23, 24])  
-for n in range(len(big_array)):
+for n in range(len(table_rows)):
     if (len(np.where(hlines == n)[0]) > 0):
         print(r"\hline")
-    print(big_array[n][:-3] + r"\\")
+    print(table_rows[n][:-3] + r"\\")
 print(r"\hline")
 print(r"\hline")
 

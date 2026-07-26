@@ -1,29 +1,35 @@
 import numpy as np
 from astropy.io import fits
-import matplotlib.pyplot as plt
 import datetime
-import corner
-from matplotlib import rcParams
 
 start = datetime.datetime.now()
 print(start)
 print('\n')
 
 #LOAD INITIAL CHAIN POINTS FITS FILE
-hdul = fits.open('ICP_rev3531_1_9_22_a0_test.fits')
+hdul = fits.open('ICP_rev3531_1_9_22_a0.fits') 
 cols = hdul[1].columns
 data = hdul[1].data
 
 #LOAD FIRST RUN FITS FILE TO BE OVERWRITTEN
-hdulI = fits.open('rev3531_1_9_22_a0_2M_test.fits', mode = 'update')
+hdulI = fits.open('rev3531_1_9_22_a0_2M.fits', mode = 'update')
 colsI = hdulI[1].columns
 dataI = hdulI[1].data
 
 #SET THESE NUMBERS!!!!!!
 M_dd_Edd_max = 23.2539
 M_dd_Edd_min = 18.5592
-R_norm_max = 1.67457e-3
 no_walkers = 200
+MAXI_GRO = "MAXI"
+
+#MAXI or GRO
+if (MAXI_GRO == "MAXI"):
+    R_norm = 1.67457e-3 #SET THIS NUMBER IF NEEDED!!!!!!
+    R_norm_max = 100 * R_norm
+    R_norm_min = 1e-6 * R_norm_max
+elif (MAXI_GRO == "GRO"):
+    R_norm_max = 2.0
+    R_norm_min = 1e-9
 
 #TEST FOR CERTAIN FREE PARAMETERS IN MODEL
 
@@ -165,7 +171,7 @@ lower_limits = [
                 1, #Gamma_R
                 0, #log(xi)
                 0.5, #A_Fe
-                1e-6 * R_norm_max #norm_R
+                R_norm_min #norm_R
                 ]
 
 higher_limits = [
@@ -181,7 +187,7 @@ higher_limits = [
                 3.6, #Gamma_R
                 4.7, #log(xi)
                 10, #A_Fe
-                100*R_norm_max  #norm_R
+                R_norm_max  #norm_R
                 ]
 
 #INSERT SPIN PARAMETER INFO
